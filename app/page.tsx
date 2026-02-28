@@ -4,8 +4,8 @@ import React from "react";
 const page = () => {
   return (
     <div>
-      <h1 className="text-red-300">hello world</h1>
-      <Button>click here</Button>
+      {/* <h1 className="text-red-300">hello world</h1>
+      <Button>click here</Button> */}
     </div>
   );
 };
