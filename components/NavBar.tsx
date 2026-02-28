@@ -1,10 +1,17 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../assets/logo.png";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import logo from "../assets/logo.png";
 
 const navItems = [
   { label: "Library", href: "/" },
@@ -13,9 +20,10 @@ const navItems = [
 
 const NavBar = () => {
   const pathName = usePathname();
+  const { user } = useUser();
 
   return (
-    <header className="w-full fixed top-0 z-50 bg-[var(--bg-primary)]">
+    <header className="w-full fixed top-0 z-50 bg-(--bg-primary)">
       <div className="wrapper navbar-height py-4 flex justify-between items-center">
         <Link href="/" className="flex gap-1 items-center">
           <Image src={logo} alt="Bookfied" width={42} height={26} priority />
@@ -40,6 +48,21 @@ const NavBar = () => {
               </Link>
             );
           })}
+          <div className="flex gap-7.5 items-center">
+            <SignedOut>
+              <SignInButton mode="modal" />
+            </SignedOut>
+            <SignedIn>
+              <div className="nav-user-link">
+                <UserButton />
+                {user?.firstName && (
+                  <Link href="/subscriptions" className="nav-user-name">
+                    {user.firstName}
+                  </Link>
+                )}
+              </div>
+            </SignedIn>
+          </div>
         </nav>
       </div>
     </header>
